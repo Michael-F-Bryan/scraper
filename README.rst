@@ -46,37 +46,41 @@ printing out their alt text.
     from scraper.spider import BaseScraper
     from scraper.models import Job
 
-    class Spidey(BaseScraper):
-        initial_urls = ['http://wikipedia.com/']
-            
+    class Scraper(BaseScraper):
+        initial_urls = ['https://en.wikipedia.org/']
+
         def do_initial(self, job, page):
             """
             Process all the pages in our `Spidey.initial_urls` list.
             """
-            for tag in page.find_all('a'):
-                # Get the tag's href and turn it from a relative to
-                # absolute url (urljoin will ignore page.url if the href
-                # is already an absolute URL)
-                href = tag['href']
-                url = urljoin(page.url, href)
+            # Get the "On This Day" list
+            on_this_day = page.find(id='mp-otd')
 
-                if 'www.wikipedia.com' not in url:
-                    continue
-                    
-                # Yield a "Job" to add it to the job queue
-                yield Job('link', url)
-                
-        def do_link(self, job, page):
+            print('On this day...')
+
+            # Print each list item
+            for line in on_this_day.find_all('li'):
+                print(line.text.strip())
+
+            # Now get a random wikipedia page
+            random_url = 'https://en.wikipedia.org/wiki/Special:Random'
+            yield Job('random', random_url)
+
+        def do_random(self, job, page):
             """
             Process all "link" jobs.
             """
             print('Scraping page: {}'.format(page.url))
 
-            # Get all the images on the page and print their alt text
-            for img in page.find_all('img'):
-                if 'alt' in img:
-                    print(img['alt'])
+            # How many images are on this page?
+            images = page.find_all('img')
 
+            print('There are {} images on this page.'.format(len(images)))
 
-.. _requests: http://docs.python-requests.org/en/master/
-.. _BeautifulSoup: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+    def main():
+        bob = Scraper()
+        bob.start()
+        bob.wait()
+
+    if __name__ == "__main__":
+        main()

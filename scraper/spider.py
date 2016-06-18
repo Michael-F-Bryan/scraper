@@ -21,10 +21,11 @@ class BaseScraper:
     A base class that all scrapers can inherit from.
     """
     initial_urls = []
-    def __init__(self, max_threads=10):
+    def __init__(self, max_threads=10, log_file='stderr'):
         self.futures = []
         self.pool = ThreadPoolExecutor(max_workers=max_threads)
-        self.logger = get_logger(__name__, 'scraper.log') 
+        self.log_file = log_file
+        self.logger = get_logger(__name__, log_file) 
         self.shutdown = False
     
     def do_initial(self, job, page):
@@ -38,11 +39,11 @@ class BaseScraper:
         """
         Start the scraper.
         """
-        self.logger.info('Starting Scraper')
+        self.logger.debug('Starting Scraper')
         for link in self.initial_urls:
             new_job = Job('initial', link)
             self._queue(new_job)
-            
+
     def stop(self):
         """
         Cancel all scheduled jobs, and shutdown the thread pool.
@@ -65,15 +66,18 @@ class BaseScraper:
         print('Completed: {}'.format(len([fut for fut in futures if fut.done() and not fut.cancelled()])))
         print('Cancelled: {}'.format(len([fut for fut in futures if fut.cancelled()])))
         
-    def wait(self):
+    def wait(self, progress=False):
         """
-        Block until all jobs are completed, printing a simple progress bar.
+        Block until all jobs are completed, printing a simple progress bar 
+        if desired.
         """
-        t = tqdm(leave=True)
+        if progress:
+            t = tqdm(leave=True)
         while any(not f.done() for f in self.futures):
             time.sleep(0.25)
-            t.n = self.number_done()
-            t.refresh()
+            if progress:
+                t.n = self.number_done()
+                t.refresh()
             
     def number_done(self):
         """
@@ -86,7 +90,7 @@ class BaseScraper:
         Take a job and run it's associated handler, scheduling any
         yielded results to be executed soon.
         """
-        self.logger.info('processing job: {}'.format(job))
+        self.logger.debug('processing job: {}'.format(job))
         
         handler = getattr(self, 'do_'+job.name)
         if handler is None:
@@ -130,4 +134,3 @@ class BaseScraper:
         self.logger.error('An error occurred...\n\n'
                           '{tb}\n'
                           '{e.__class__.__name__}: "{e}"\n'.format(tb=tb, e=e))
-        self.stop()
