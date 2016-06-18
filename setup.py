@@ -11,6 +11,9 @@ setup(
             'requests',
             'bs4',
             'tqdm',
+            'sphinx',
+            'sphinxcontrib-napoleon',
+            'sphinx_rtd_theme',
             ],
 
         )

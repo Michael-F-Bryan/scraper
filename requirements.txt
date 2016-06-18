@@ -1,0 +1,22 @@
+alabaster==0.7.8
+Babel==2.3.4
+beautifulsoup4==4.4.1
+bs4==0.0.1
+docutils==0.12
+imagesize==0.7.1
+Jinja2==2.8
+MarkupSafe==0.23
+pockets==0.3
+py==1.4.31
+Pygments==2.1.3
+pytest==2.9.2
+pytz==2016.4
+requests==2.10.0
+-e git+git@github-legit:Michael-F-Bryan/scraper.git@cea6df1a6410694d13f1e92f31c763a05975eed5#egg=scraper
+six==1.10.0
+snowballstemmer==1.2.1
+Sphinx==1.4.4
+sphinx-rtd-theme==0.1.9
+sphinxcontrib-napoleon==0.5.1
+tqdm==4.7.4
+versioneer==0.16
