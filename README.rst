@@ -80,7 +80,13 @@ printing out their alt text.
     def main():
         bob = Scraper()
         bob.start()
-        bob.wait()
+
+        try:
+            bob.wait()
+        except KeyboardInterrupt:
+            bob.stop()
+            
+        bob.status()
 
     if __name__ == "__main__":
         main()
