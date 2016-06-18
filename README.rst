@@ -40,7 +40,7 @@ links which point to other Wikipedia pages. The scraper will then process these
 links by first printing the url and then finding all the images on the page,
 printing out their alt text.
 
-::
+.. code:: python3
 
     from urllib.parse import urljoin
     from scraper.spider import BaseScraper
@@ -51,7 +51,7 @@ printing out their alt text.
 
         def do_initial(self, job, page):
             """
-            Process all the pages in our `Spidey.initial_urls` list.
+            Process all the pages in our `Scraper.initial_urls` list.
             """
             # Get the "On This Day" list
             on_this_day = page.find(id='mp-otd')
@@ -68,7 +68,7 @@ printing out their alt text.
 
         def do_random(self, job, page):
             """
-            Process all "link" jobs.
+            Process a random page.
             """
             print('Scraping page: {}'.format(page.url))
 
@@ -90,3 +90,8 @@ printing out their alt text.
 
     if __name__ == "__main__":
         main()
+
+
+.. _requests: http://docs.python-requests.org/en/master/
+.. _BeautifulSoup: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+
