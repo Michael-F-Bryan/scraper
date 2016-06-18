@@ -9,10 +9,12 @@ Welcome to scraper's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
     Readme <readme>
     API Reference <scraper>
+    Authors <authors>
+    Changes <changes>
     License <license>
 
 

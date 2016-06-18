@@ -1,8 +1,27 @@
+===============
 scraper package
 ===============
 
+Module contents
+===============
+
+.. automodule:: scraper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Submodules
-----------
+==========
+
+scraper.spider module
+---------------------
+
+.. automodule:: scraper.spider
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 scraper.models module
 ---------------------
@@ -12,13 +31,6 @@ scraper.models module
     :undoc-members:
     :show-inheritance:
 
-scraper.spider module
----------------------
-
-.. automodule:: scraper.spider
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 scraper.utils module
 --------------------
@@ -29,10 +41,3 @@ scraper.utils module
     :show-inheritance:
 
 
-Module contents
----------------
-
-.. automodule:: scraper
-    :members:
-    :undoc-members:
-    :show-inheritance:

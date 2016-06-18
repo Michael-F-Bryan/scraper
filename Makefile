@@ -43,7 +43,7 @@ coverage:
 	$(RM) .coverage
 
 build_docs: clean
-	sphinx-apidoc -o docs $(package)
+	sphinx-apidoc -o docs -T $(package)
 	$(MAKE) --directory=$(DOC_DIR) html
 
 docs: build_docs
